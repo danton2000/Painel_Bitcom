@@ -1,0 +1,65 @@
+#botoes{
+    margin-bottom: 20px;
+}
+
+.criar_usuario{
+    margin-right: 20px;
+}
+
+div  #botao_empresa{
+    color: white;
+    background-color: rgb(47, 200, 8);
+    
+}
+
+div #botao_empresa:hover{
+    color: rgb(47, 200, 8);
+    background-color: white;
+    transition: 500ms !important;
+}
+
+
+div #botao_direita{
+    text-align: right;
+}
+
+div #botao_voltar{
+    color: #000;
+    background-color: rgb(209, 209, 209);
+    font-weight: bold;
+    width: 100px;
+}
+
+div #botao_voltar:hover{
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+    transition: 500ms !important;
+}
+
+div .table-responsive{
+    margin-top: 30px;
+}
+
+.table .thead-dark th{
+    text-align: center;
+}     
+
+.my-custom-scrollbar {
+	position: relative;
+	height: 400px;
+	overflow: auto;
+	margin: auto 0px;
+}
+.table-wrapper-scroll-y {
+	display: block;
+}
+#conteudo_tabela{
+    background-color: white;
+    border: rgb(128, 124, 124) 2px solid;
+    margin-bottom: 10px;
+}
+tbody{
+    font-weight: bold;
+    color: black;
+    text-align: center;
+}

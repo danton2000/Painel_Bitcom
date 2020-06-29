@@ -1,0 +1,52 @@
+#tamanho_login{
+	width: 350px;
+	margin-top: 100px;
+	border-radius: 15px;
+	border: 2px solid #f3f3f3;
+	-webkit-box-shadow: 10px 10px 5px 0px rgba(163,150,163,1);
+	-moz-box-shadow: 10px 10px 5px 0px rgba(163,150,163,1);
+	box-shadow: 10px 10px 5px 0px rgba(163,150,163,1);
+
+}
+
+#botao_direita{
+	text-align: right;
+    margin-top: 30px;
+}
+
+#botao_login{
+	color: white;
+	font-size: 15px;
+    font-weight: bold;
+    background-color: rgb(28, 200, 51);
+}
+
+#botao_login:hover{
+    background-color: rgb(13, 85, 23);
+    transition: 500ms !important;
+}
+
+.form-group h3{
+	text-align: center;
+}
+
+/*Cadastro concluido*/
+
+
+/*update USUARIOS*/
+#botoes{
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
+#botao_voltar{
+	background-color: rgb(206, 203, 203);
+	color: black;
+	font-weight: bold;
+}
+
+#botao_voltar:hover{
+	color: white;
+	background-color: rgb(0, 0, 0);
+	transition: 500ms !important;
+}

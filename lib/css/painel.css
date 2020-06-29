@@ -1,0 +1,36 @@
+/*conteudo*/
+input:read-only{
+    background-color: white !important;
+}
+
+.fieldset-border .input-group{
+    margin-top: 10px !important;
+}
+    
+.fieldset-border {
+    font-size: 20px;
+    padding: 0 15px 15px 15px !important;
+    margin: 0 0 1.5em 0 !important;
+}
+
+.borda{
+    border: 2px solid rgb(246, 98, 98) !important;
+}
+
+.borda2{
+    border: 2px solid rgb(34, 64, 233) !important;
+}
+
+.borda3{
+    border: 2px solid rgb(26, 190, 67) !important;
+}
+
+.fieldset-border .legend-border {
+    font-size: 1.2em !important;
+    text-align: left !important;
+    width: auto;
+    padding: 0 10px;
+    border-bottom: none;
+}
+/* // */
+
