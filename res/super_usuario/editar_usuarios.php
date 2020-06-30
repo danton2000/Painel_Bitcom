@@ -4,7 +4,14 @@ session_start();
 require '../model/conexao.class.php';
 require '../model/check.php';
 
-$_SESSION['login_usuarios'];
+$id_usuario = $_SESSION['login_usuarios'];
+$login_usuario = $_SESSION['login_usuarios'];
+$super_usuario = $_SESSION['super_usuarios'];
+
+if (!$super_usuario == 1) {
+   header('Location: ../model/logout.php');
+}
+
 ?>
 
 <?php

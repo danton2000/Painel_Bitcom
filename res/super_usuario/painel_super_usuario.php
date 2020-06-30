@@ -59,7 +59,7 @@ if (!$super_usuario == 1) {
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="empresas/painel_empresas.php">Ver empresas</a>
                         <a class="dropdown-item" href="vincular_empresa.php">Vincular empresa</a>
-                        <a class="dropdown-item" href="desvincular_empresa.php">Desincular empresa</a>
+                        <a class="dropdown-item" href="desvincular_empresa.php">Desvincular empresa</a>
                     </div>
                 </li>
 

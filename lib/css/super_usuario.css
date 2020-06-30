@@ -1,3 +1,7 @@
+input:read-only{
+    background-color: white !important;
+}
+
 #botoes{
     margin-bottom: 20px;
 }

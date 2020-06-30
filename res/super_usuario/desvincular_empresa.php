@@ -4,7 +4,14 @@ session_start();
 require '../model/conexao.class.php';
 require '../model/check.php';
 
-$_SESSION['login_usuarios'];
+$id_usuario = $_SESSION['login_usuarios'];
+$login_usuario = $_SESSION['login_usuarios'];
+$super_usuario = $_SESSION['super_usuarios'];
+
+if (!$super_usuario == 1) {
+   header('Location: ../model/logout.php');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -16,15 +23,15 @@ $_SESSION['login_usuarios'];
     <link rel="stylesheet" href="../../lib/css/cadastro.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!-- <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css"> -->
-    <title>Vincular</title>
+    <title>Desvincular</title>
 </head>
 
 <body>
     <div class="container" id="tamanho_login">
 
-        <form action="insert_usuario_empresa.php" method="POST">
+        <form action="delete_usuario_empresa.php" method="POST">
             <div class="form-group">
-                <h3>Vincular Empresa</h3>
+                <h3>Desvincular Empresa</h3>
             </div>
 
             <div class="form-group">
@@ -67,7 +74,7 @@ $_SESSION['login_usuarios'];
 
                     <div class="col">
                         <div class="float-right">
-                            <button type="submit" id="botao_login" name="salvar" class="btn btn-sm">Salvar</button>
+                            <button type="submit" id="botao_excluir" name="salvar" class="btn btn-sm">Desvincular</button>
                         </div>
                     </div>
                 </div>

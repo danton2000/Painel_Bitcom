@@ -14,6 +14,9 @@
     <div class="container" id="tamanho_login">
 
         <form action="res/login/login.php" method="POST">
+            <div class="form-group text-center">
+                <h3>Login</h3>
+            </div>
             <div class="form-group">
                 <label>E-mail</label>
                 <input type="text" name="login_usuarios" class="form-control" placeholder="Insira o seu email" autocomplete="off" required>

@@ -1,6 +1,6 @@
 <?php
 session_start();
- 
+
 require '../../model/conexao.class.php';
 require '../../model/check_empresa.php';
 
@@ -9,7 +9,7 @@ $login_usuario = $_SESSION['login_usuarios'];
 $super_usuario = $_SESSION['super_usuarios'];
 
 if (!$super_usuario == 1) {
-   header('Location: ../../model/logout.php');
+    header('Location: ../../model/logout.php');
 }
 ?>
 
@@ -26,7 +26,7 @@ if (!$super_usuario == 1) {
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -47,14 +47,25 @@ if (!$super_usuario == 1) {
                     <a class="nav-link" href="../../usuarios/painel.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cadastro_empresas.php">Adicionar Empresa</a>
+                    <a class="nav-link" href="../../super_usuario/painel_super_usuario.php">Ver usuários</a>
                 </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Empresas
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="cadastro_empresas.php">Adicionar Empresa</a>
+                        <a class="dropdown-item" href="../vincular_empresa.php">Vincular empresa</a>
+                        <a class="dropdown-item" href="../desvincular_empresa.php">Desvincular empresa</a>
+                    </div>
+                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Logout
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="../painel_super_usuario.php">Voltar</a>
                         <a class="dropdown-item" href="../../model/logout.php">Sair</a>
                     </div>
                 </li>

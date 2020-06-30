@@ -17,6 +17,7 @@ $super_usuario = $_SESSION['super_usuarios'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../lib/css/painel.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/css/navbar.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!-- <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css"> -->
     <title>Painel</title>
@@ -30,7 +31,6 @@ $super_usuario = $_SESSION['super_usuarios'];
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-
                 <div class="navbar-brand row">
                     <div class="col">
                         <div class="input-group input-group-sm">
@@ -60,7 +60,7 @@ $super_usuario = $_SESSION['super_usuarios'];
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="../super_usuario/empresas/painel_empresas.php">Ver empresas</a>
                             <a class="dropdown-item" href="../super_usuario/vincular_empresa.php">Vincular empresa</a>
-                            <a class="dropdown-item" href="../super_usuario/desvincular_empresa.php">Desincular empresa</a>
+                            <a class="dropdown-item" href="../super_usuario/desvincular_empresa.php">Desvincular empresa</a>
                         </div>
                     </li>
 
@@ -95,7 +95,7 @@ $super_usuario = $_SESSION['super_usuarios'];
                 $id_usuario = $_SESSION['id_usuarios'];
 
                 $PDO = db_connect();
-                $sql = "SELECT nome_empresas FROM Empresas a INNER JOIN Usuarios_Empresas b USING(id_empresas) WHERE id_usuarios = :id_usuario";
+                $sql = "SELECT DISTINCT nome_empresas FROM Empresas a INNER JOIN Usuarios_Empresas b USING(id_empresas) WHERE id_usuarios = :id_usuario ORDER BY nome_empresas ASC";
                 $stmt = $PDO->prepare($sql);
                 $stmt->bindParam(':id_usuario', $id_usuario);
                 $stmt->execute();
