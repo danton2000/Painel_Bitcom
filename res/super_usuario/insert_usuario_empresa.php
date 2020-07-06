@@ -54,7 +54,7 @@ if (isset($_POST['salvar'])) {
 
 	//INSIRNDO OS IDs na tabela USUARIOS_EMPRESAS
 
-	$sql3 = "INSERT INTO usuarios_empresas (id_empresas, id_usuarios) VALUES (:id_empresa, :id_usuario)";
+	$sql3 = "INSERT INTO Usuarios_Empresas (id_empresas, id_usuarios) VALUES (:id_empresa, :id_usuario)";
 
 	$stmt = $PDO->prepare($sql3);
 
@@ -65,10 +65,10 @@ if (isset($_POST['salvar'])) {
 
 	$usuario_empresas = $usuario_empresa[0];
 
-	var_dump($usuario_empresas);
+	// var_dump($usuario_empresas);
 
 	
 
 };
     
-	header("location: painel_super_usuario.php");
+	header("location: vincular_empresa.php");

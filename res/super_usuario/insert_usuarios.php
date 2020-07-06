@@ -19,6 +19,6 @@
 
     };
     
-	header("location: painel_super_usuario.php");
+	header("location: cadastro_usuarios.php");
 ?>
 

@@ -1,13 +1,17 @@
 <?php
 session_start();
 
+require '../model/init.php';
+require '../model/check.php';
+
 $id_usuario = $_SESSION['login_usuarios'];
 $login_usuario = $_SESSION['login_usuarios'];
 $super_usuario = $_SESSION['super_usuarios'];
 
 if (!$super_usuario == 1) {
-    header('Location: ../../model/logout.php');
+    header('Location: ../model/logout.php');
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -15,8 +19,8 @@ if (!$super_usuario == 1) {
 
 <head>
     <meta charset="utf-8">
-    <title>Listagem de Empresas</title>
-    <link rel="stylesheet" type="text/css" href="../../../lib/css/super_usuario.css">
+    <title>Lista de Empresas/Usuários</title>
+    <link rel="stylesheet" type="text/css" href="../../lib/css/super_usuario.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/06ffaaed9a.js" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,29 +45,32 @@ if (!$super_usuario == 1) {
                     </div>
                 </div>
                 <li class="nav-item active">
-                    <a class="nav-link" href="../../usuarios/painel.php">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="../usuarios/painel.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../super_usuario/painel_super_usuario.php">Ver usuários</a>
+                    <a class="nav-link" href="cadastro_usuarios.php">Criar usuário</a>
                 </li>
+
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Empresas
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="cadastro_empresas.php">Adicionar Empresa</a>
-                        <a class="dropdown-item" href="../vincular_empresa.php">Vincular empresa</a>
-                        <a class="dropdown-item" href="../desvincular_empresa.php">Desvincular empresa</a>
+                        <a class="dropdown-item" href="empresas/painel_empresas.php">Ver empresas</a>
+                        <a class="dropdown-item" href="vincular_empresa.php">Vincular empresa</a>
+                        <a class="dropdown-item" href="painel_desvincular_empresa.php">Desvincular empresa</a>
                     </div>
                 </li>
+
+
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Logout
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="../../model/logout.php">Sair</a>
+                        <a class="dropdown-item" href="../model/logout.php">Sair</a>
                     </div>
                 </li>
             </ul>
@@ -73,21 +80,23 @@ if (!$super_usuario == 1) {
     <div class="container-fluid">
         <!--container -->
         <!-- colocar os espaçamentos ficando esponsivo-->
-        <h3 class="text-center">Lista de Empresas</h3>
+        <h3 class="text-center">Lista de Empresas/Usuários</h3>
         <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
             <table class="table table-dark" id="conteudo_tabela">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Nome da Empresa</th><!-- col = coluna -->
+                        <th scope="col">Nome Empresa</th><!-- col = coluna -->
+
+                        <th scope="col">Login Usuario</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    require '../../model/check.php';
+                    require '../model/check.php';
 
                     $PDO = db_connect();
-                    $sql = "SELECT id_empresas, nome_empresas FROM Empresas ORDER BY nome_empresas ASC";
+                    $sql = "SELECT id_empresas, nome_empresas, id_usuarios, login_usuarios FROM Empresas a INNER JOIN Usuarios_Empresas b USING(id_empresas) INNER JOIN usuarios c USING(id_usuarios) ORDER BY nome_empresas, login_usuarios ASC";
                     $stmt = $PDO->prepare($sql);
                     $stmt->execute();
 
@@ -95,13 +104,15 @@ if (!$super_usuario == 1) {
                     foreach ($resultado as $indice => $valor) {
                         echo '<tr>';
                         echo '<td>' . htmlspecialchars($valor['nome_empresas']) . '</td>';
+                        echo '<td>' . htmlspecialchars($valor['login_usuarios']) . '</td>';
                         echo '<td class="text-center">';
-                        echo '<a href="editar_empresas.php?id_empresas=' .$valor['id_empresas'] . '"name="editar" title="update"><i class="fa fa-pencil"></i></a> ';
-                        echo '<a href="delete_empresas.php?id_empresas=' .$valor['id_empresas'] . '"name="delete" title="delete"><i class="fa fa-trash-o text-danger"></i></a>';
+                        echo '<a href="delete_usuario_empresa.php?id_empresas=' . $valor['id_empresas'] .'&id_usuarios='. $valor['id_usuarios'].'"name="delete" title="delete"><i class="fa fa-trash-o text-danger"></i></a>';
                         echo '</td>';
                         echo '</tr>';
                     }
                     ?>
+                        
+                    
                 </tbody>
             </table>
         </div>

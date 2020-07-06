@@ -1,9 +1,6 @@
 <?php
 session_start();
  
-require '../../model/conexao.class.php';
-require '../../model/check_empresa.php';
-
 $id_usuario = $_SESSION['login_usuarios'];
 $login_usuario = $_SESSION['login_usuarios'];
 $super_usuario = $_SESSION['super_usuarios'];

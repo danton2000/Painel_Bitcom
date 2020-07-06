@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-require_once '../model/init.php';
-require '../model/check.php';
-
 $id_usuario = $_SESSION['login_usuarios'];
 $login_usuario = $_SESSION['login_usuarios'];
 $super_usuario = $_SESSION['super_usuarios'];
@@ -60,7 +57,7 @@ $super_usuario = $_SESSION['super_usuarios'];
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="../super_usuario/empresas/painel_empresas.php">Ver empresas</a>
                             <a class="dropdown-item" href="../super_usuario/vincular_empresa.php">Vincular empresa</a>
-                            <a class="dropdown-item" href="../super_usuario/desvincular_empresa.php">Desvincular empresa</a>
+                            <a class="dropdown-item" href="../super_usuario/painel_desvincular_empresa.php">Desvincular empresa</a>
                         </div>
                     </li>
 

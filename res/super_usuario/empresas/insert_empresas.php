@@ -20,6 +20,6 @@
 
 	};
 	
-	header("location: painel_empresas.php");
+	header("location: cadastro_empresas.php");
 ?>
 
