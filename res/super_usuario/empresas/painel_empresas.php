@@ -29,7 +29,6 @@ if (!$super_usuario == 1) {
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-
                 <div class="navbar-brand row">
                     <div class="col">
                         <div class="input-group input-group-sm">
@@ -54,7 +53,7 @@ if (!$super_usuario == 1) {
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="cadastro_empresas.php">Adicionar Empresa</a>
                         <a class="dropdown-item" href="../vincular_empresa.php">Vincular empresa</a>
-                        <a class="dropdown-item" href="../desvincular_empresa.php">Desvincular empresa</a>
+                        <a class="dropdown-item" href="../painel_desvincular_empresa.php">Desvincular empresa</a>
                     </div>
                 </li>
 
@@ -74,6 +73,18 @@ if (!$super_usuario == 1) {
         <!--container -->
         <!-- colocar os espaçamentos ficando esponsivo-->
         <h3 class="text-center">Lista de Empresas</h3>
+        <div class="row">
+            <div class="col-sm">
+                <form action="painel_empresas.php" method="POST">
+                    <div class="float-right input-group input-group-sm">
+                        <input type="text" class="form-control" name="pesquisa" placeholder="Pesquisar por empresa" value="">
+                        <div class="input-group-prepend">
+                            <button type="submit" name="btn_pesquisa" class="input-group-text" id="pesquisar">Pesquisar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
             <table class="table table-dark" id="conteudo_tabela">
                 <thead class="thead-dark">
@@ -86,20 +97,42 @@ if (!$super_usuario == 1) {
                     <?php
                     require '../../model/check.php';
 
-                    $PDO = db_connect();
-                    $sql = "SELECT id_empresas, nome_empresas FROM Empresas ORDER BY nome_empresas ASC";
-                    $stmt = $PDO->prepare($sql);
-                    $stmt->execute();
+                    if (isset($_POST['btn_pesquisa'])) {
+                        $pesquisa = $_POST['pesquisa'];
 
-                    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach ($resultado as $indice => $valor) {
-                        echo '<tr>';
-                        echo '<td>' . htmlspecialchars($valor['nome_empresas']) . '</td>';
-                        echo '<td class="text-center">';
-                        echo '<a href="editar_empresas.php?id_empresas=' .$valor['id_empresas'] . '"name="editar" title="update"><i class="fa fa-pencil"></i></a> ';
-                        echo '<a href="delete_empresas.php?id_empresas=' .$valor['id_empresas'] . '"name="delete" title="delete"><i class="fa fa-trash-o text-danger"></i></a>';
-                        echo '</td>';
-                        echo '</tr>';
+                        $PDO = db_connect();
+                        $sql = "SELECT id_empresas, nome_empresas FROM Empresas WHERE nome_empresas LIKE :pesquisa ORDER BY nome_empresas ASC";
+                        $stmt = $PDO->prepare($sql);
+                        $pesquisar = '%' . $pesquisa . '%';
+                        $stmt->bindParam('pesquisa', $pesquisar, PDO::PARAM_STR);
+                        $stmt->execute();
+
+                        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($resultado as $indice => $valor) {
+                            echo '<tr>';
+                            echo '<td>' . htmlspecialchars($valor['nome_empresas']) . '</td>';
+                            echo '<td class="text-center">';
+                            echo '<a href="editar_empresas.php?id_empresas=' . $valor['id_empresas'] . '"name="editar" title="update"><i class="fa fa-pencil"></i></a> ';
+                            echo '<a href="delete_empresas.php?id_empresas=' . $valor['id_empresas'] . '"name="delete" title="delete"><i class="fa fa-trash-o text-danger"></i></a>';
+                            echo '</td>';
+                            echo '</tr>';
+                        }
+                    } else {
+                        $PDO = db_connect();
+                        $sql = "SELECT id_empresas, nome_empresas FROM Empresas ORDER BY nome_empresas ASC";
+                        $stmt = $PDO->prepare($sql);
+                        $stmt->execute();
+
+                        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($resultado as $indice => $valor) {
+                            echo '<tr>';
+                            echo '<td>' . htmlspecialchars($valor['nome_empresas']) . '</td>';
+                            echo '<td class="text-center">';
+                            echo '<a href="editar_empresas.php?id_empresas=' . $valor['id_empresas'] . '"name="editar" title="update"><i class="fa fa-pencil"></i></a> ';
+                            echo '<a href="delete_empresas.php?id_empresas=' . $valor['id_empresas'] . '"name="delete" title="delete"><i class="fa fa-trash-o text-danger"></i></a>';
+                            echo '</td>';
+                            echo '</tr>';
+                        }
                     }
                     ?>
                 </tbody>

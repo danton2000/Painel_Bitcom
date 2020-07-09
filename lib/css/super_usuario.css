@@ -67,3 +67,17 @@ tbody{
     color: black;
     text-align: center;
 }
+
+.container-fluid h3{
+    margin-bottom: 15px;
+}
+
+.container-fluid .input-group{
+    
+}
+
+#pesquisar:hover{
+    background-color: rgb(88, 86, 86);
+    color: #fff;
+    transition: 500ms !important;
+}

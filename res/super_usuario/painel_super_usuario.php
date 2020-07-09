@@ -81,6 +81,18 @@ if (!$super_usuario == 1) {
         <!--container -->
         <!-- colocar os espaçamentos ficando esponsivo-->
         <h3 class="text-center">Lista de Usuários</h3>
+        <div class="row">
+            <div class="col-sm">
+                <form action="painel_super_usuario.php" method="POST">
+                    <div class="float-right input-group input-group-sm">
+                        <input type="text" class="form-control" name="pesquisa" placeholder="Pesquisar por usuário" value="">
+                        <div class="input-group-prepend">
+                            <button type="submit" name="btn_pesquisa" class="input-group-text" id="pesquisar">Pesquisar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
             <table class="table table-dark" id="conteudo_tabela">
                 <thead class="thead-dark">
@@ -94,26 +106,46 @@ if (!$super_usuario == 1) {
                 <tbody>
                     <?php
                     require '../model/check.php';
+                    if(isset($_POST['btn_pesquisa'])){
+                        $pesquisa = $_POST['pesquisa'];
+                        $PDO = db_connect();
+                        $sql = "SELECT id_usuarios, login_usuarios, super_usuarios FROM Usuarios WHERE login_usuarios LIKE :pesquisa ORDER BY login_usuarios ASC";
+                        $stmt = $PDO->prepare($sql);
+                        $pesquisar = '%' . $pesquisa . '%';
+                        $stmt->bindParam('pesquisa', $pesquisar, PDO::PARAM_STR);
+                        $stmt->execute();
 
-                    $PDO = db_connect();
-                    $sql = "SELECT id_usuarios, login_usuarios, super_usuarios FROM Usuarios ORDER BY login_usuarios ASC";
-                    $stmt = $PDO->prepare($sql);
-                    $stmt->execute();
+                        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($resultado as $indice => $valor) {
+                            echo '<tr>';
+                            echo '<td>' . htmlspecialchars($valor['login_usuarios']) . '</td>';
+                            echo '<td>' . htmlspecialchars($valor['super_usuarios']) . '</td>';
+                            echo '<td class="text-center">';
+                            echo '<a href="editar_usuarios.php?id_usuarios=' . $valor['id_usuarios'] . '"name="editar" title="update"><i class="fa fa-pencil"></i></a> ';
+                            echo '<a href="delete_usuarios.php?id_usuarios=' . $valor['id_usuarios'] . '"name="delete" title="delete"><i class="fa fa-trash-o text-danger"></i></a>';
+                            echo '</td>';
+                            echo '</tr>';
+                        }
+                        
+                    }else{
+                        $PDO = db_connect();
+                        $sql = "SELECT id_usuarios, login_usuarios, super_usuarios FROM Usuarios ORDER BY login_usuarios ASC";
+                        $stmt = $PDO->prepare($sql);
+                        $stmt->execute();
 
-                    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach ($resultado as $indice => $valor) {
-                        echo '<tr>';
-                        echo '<td>' . htmlspecialchars($valor['login_usuarios']) . '</td>';
-                        echo '<td>' . htmlspecialchars($valor['super_usuarios']) . '</td>';
-                        echo '<td class="text-center">';
-                        echo '<a href="editar_usuarios.php?id_usuarios=' .$valor['id_usuarios'] . '"name="editar" title="update"><i class="fa fa-pencil"></i></a> ';
-                        echo '<a href="delete_usuarios.php?id_usuarios=' .$valor['id_usuarios'] . '"name="delete" title="delete"><i class="fa fa-trash-o text-danger"></i></a>';
-                        echo '</td>';
-                        echo '</tr>';
+                        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($resultado as $indice => $valor) {
+                            echo '<tr>';
+                            echo '<td>' . htmlspecialchars($valor['login_usuarios']) . '</td>';
+                            echo '<td>' . htmlspecialchars($valor['super_usuarios']) . '</td>';
+                            echo '<td class="text-center">';
+                            echo '<a href="editar_usuarios.php?id_usuarios=' . $valor['id_usuarios'] . '"name="editar" title="update"><i class="fa fa-pencil"></i></a> ';
+                            echo '<a href="delete_usuarios.php?id_usuarios=' . $valor['id_usuarios'] . '"name="delete" title="delete"><i class="fa fa-trash-o text-danger"></i></a>';
+                            echo '</td>';
+                            echo '</tr>';
+                        }
                     }
                     ?>
-
-                    
                 </tbody>
             </table>
         </div>

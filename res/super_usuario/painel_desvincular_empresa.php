@@ -48,9 +48,8 @@ if (!$super_usuario == 1) {
                     <a class="nav-link" href="../usuarios/painel.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cadastro_usuarios.php">Criar usuário</a>
+                    <a class="nav-link" href="painel_super_usuario.php">Ver usuários</a>
                 </li>
-
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -62,8 +61,6 @@ if (!$super_usuario == 1) {
                         <a class="dropdown-item" href="painel_desvincular_empresa.php">Desvincular empresa</a>
                     </div>
                 </li>
-
-
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -81,6 +78,18 @@ if (!$super_usuario == 1) {
         <!--container -->
         <!-- colocar os espaçamentos ficando esponsivo-->
         <h3 class="text-center">Lista de Empresas/Usuários</h3>
+        <div class="row">
+            <div class="col-sm">
+                <form action="painel_desvincular_empresa.php" method="POST">
+                    <div class="float-right input-group input-group-sm">
+                        <input type="text" class="form-control" name="pesquisa" placeholder="Pesquisar Usuários" value="">
+                        <div class="input-group-prepend">
+                            <button type="submit" name="btn_pesquisa" class="input-group-text" id="pesquisar">Pesquisar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
             <table class="table table-dark" id="conteudo_tabela">
                 <thead class="thead-dark">
@@ -95,24 +104,46 @@ if (!$super_usuario == 1) {
                     <?php
                     require '../model/check.php';
 
-                    $PDO = db_connect();
-                    $sql = "SELECT id_empresas, nome_empresas, id_usuarios, login_usuarios FROM Empresas a INNER JOIN Usuarios_Empresas b USING(id_empresas) INNER JOIN usuarios c USING(id_usuarios) ORDER BY nome_empresas, login_usuarios ASC";
-                    $stmt = $PDO->prepare($sql);
-                    $stmt->execute();
+                    if (isset($_POST['btn_pesquisa'])) {
+                        $pesquisa = $_POST['pesquisa'];
 
-                    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach ($resultado as $indice => $valor) {
-                        echo '<tr>';
-                        echo '<td>' . htmlspecialchars($valor['nome_empresas']) . '</td>';
-                        echo '<td>' . htmlspecialchars($valor['login_usuarios']) . '</td>';
-                        echo '<td class="text-center">';
-                        echo '<a href="delete_usuario_empresa.php?id_empresas=' . $valor['id_empresas'] .'&id_usuarios='. $valor['id_usuarios'].'"name="delete" title="delete"><i class="fa fa-trash-o text-danger"></i></a>';
-                        echo '</td>';
-                        echo '</tr>';
+                        $PDO = db_connect();
+                        $sql = "SELECT DISTINCT id_empresas, nome_empresas, id_usuarios, login_usuarios FROM Empresas INNER JOIN Usuarios_Empresas USING(id_empresas) INNER JOIN Usuarios USING(id_usuarios) WHERE login_usuarios LIKE :pesquisa ORDER BY nome_empresas, login_usuarios ASC";
+                        $stmt = $PDO->prepare($sql);
+                        $pesquisar = '%' . $pesquisa . '%';
+                        $stmt->bindParam('pesquisa', $pesquisar, PDO::PARAM_STR);
+                        $stmt->execute();
+
+                        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($resultado as $indice => $valor) {
+                            echo '<tr>';
+                            echo '<td>' . htmlspecialchars($valor['nome_empresas']) . '</td>';
+                            echo '<td>' . htmlspecialchars($valor['login_usuarios']) . '</td>';
+                            echo '<td class="text-center">';
+                            echo '<a href="delete_usuario_empresa.php?id_empresas=' . $valor['id_empresas'] . '&id_usuarios=' . $valor['id_usuarios'] . '"name="delete" title="delete"><i class="fa fa-trash-o text-danger"></i></a>';
+                            echo '</td>';
+                            echo '</tr>';
+                        }
+                    } else {
+                        $PDO = db_connect();
+                        $sql = "SELECT DISTINCT id_empresas, nome_empresas, id_usuarios, login_usuarios FROM Empresas INNER JOIN Usuarios_Empresas USING(id_empresas) INNER JOIN Usuarios USING(id_usuarios) ORDER BY nome_empresas, login_usuarios ASC";
+                        $stmt = $PDO->prepare($sql);
+                        $stmt->execute();
+
+                        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($resultado as $indice => $valor) {
+                            echo '<tr>';
+                            echo '<td>' . htmlspecialchars($valor['nome_empresas']) . '</td>';
+                            echo '<td>' . htmlspecialchars($valor['login_usuarios']) . '</td>';
+                            echo '<td class="text-center">';
+                            echo '<a href="delete_usuario_empresa.php?id_empresas=' . $valor['id_empresas'] . '&id_usuarios=' . $valor['id_usuarios'] . '"name="delete" title="delete"><i class="fa fa-trash-o text-danger"></i></a>';
+                            echo '</td>';
+                            echo '</tr>';
+                        }
                     }
                     ?>
-                        
-                    
+
+
                 </tbody>
             </table>
         </div>
