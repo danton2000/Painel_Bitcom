@@ -27,7 +27,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
  
 if (count($usuarios) <= 0)
 {
-    echo "Email ou senha incorretos";
+    header("location: ../../login-erro.php");
     exit;
 }
  
